@@ -52,9 +52,18 @@ jobs:
           aws-secret-access-key: ${{ env.SECRET_KEY }}
           aws-session-token: ${{ env.SESSION_TOKEN }}
           aws-region: ap-northeast-2
+      - name: Get Endpoint of frontend
+        run: |
+          # echo "ENDPOINT_URL=$(aws ssm get-parameter --name /coupang-parcels/cloudfront-url --output text --query 'Parameter.Value')" >> $GITHUB_ENV
+          echo "ENDPOINT_URL=asdfasfd" >> $GITHUB_ENV
+
+      - name: Change index.html endpoint
+        run: |
+          echo $ENDPOINT_URL
+          sed -i "s/##ENDPOINT_URL##/$ENDPOINT_URL/g" index.html
 
       - name: Deploy or Upload
         env:
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
         run: |
-          aws s3 ls s3://${BUCKET_NAME}
+          aws s3api put-object --bucket ${BUCKET_NAME} --key index.html
