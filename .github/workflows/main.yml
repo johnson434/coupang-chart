@@ -59,7 +59,7 @@ jobs:
       - name: Change index.html endpoint
         run: |
           echo $ENDPOINT_URL
-          sed -i "s/##ENDPOINT_URL##/$ENDPOINT_URL/g" index.html
+          sed -i "s|##ENDPOINT_URL##|$ENDPOINT_URL|g" index.html
 
       - name: Deploy or Upload
         env:
