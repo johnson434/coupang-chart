@@ -54,8 +54,7 @@ jobs:
           aws-region: ap-northeast-2
       - name: Get Endpoint of frontend
         run: |
-          # echo "ENDPOINT_URL=$(aws ssm get-parameter --name /coupang-parcels/cloudfront-url --output text --query 'Parameter.Value')" >> $GITHUB_ENV
-          echo "ENDPOINT_URL=asdfasfd" >> $GITHUB_ENV
+          echo "ENDPOINT_URL=$(aws ssm get-parameter --name /coupang-parcels/cloudfront-url --output text --query 'Parameter.Value')" >> $GITHUB_ENV
 
       - name: Change index.html endpoint
         run: |
@@ -66,4 +65,4 @@ jobs:
         env:
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
         run: |
-          aws s3api put-object --bucket ${BUCKET_NAME} --key index.html
+          aws s3api put-object --bucket ${BUCKET_NAME} --key index.html --body index.html --content-type text/html
