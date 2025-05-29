@@ -1,0 +1,8 @@
+{
+  "StringEquals": {
+    "AWS:SourceAccount": "376129856998"
+  },
+  "ArnLike": {
+    "AWS:SourceArn": "arn:aws:s3:::aws-cloudtrail-logs-376129856998-2dff1162"
+  }
+}

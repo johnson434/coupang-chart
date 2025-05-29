@@ -30,7 +30,7 @@
         try {
           const ENDPOINT_URL = "##ENDPOINT_URL##";
 
-          const res = await fetch(ENDPOINT_URL);
+          const res = await fetch(ENDPOINT_URL + "/api/charts");
           const data = await res.json();
           console.log(JSON.stringify(data, null, 2));
 
