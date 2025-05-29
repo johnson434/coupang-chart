@@ -134,3 +134,8 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# 로컬에서 github action을 테스트하기 위해 act를 사용 중
+# secrets를 로컬 파일로 저장하여 action 테스트가 가능함.
+# 올리면 위험하니 gitignore에 추가하겠음.
+secrets
