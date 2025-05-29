@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Parcel Analytics Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      canvas {
+        max-width: 700px;
+        margin: 30px auto;
+        display: block;
+      }
+      body {
+        font-family: sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Parcel Delivery Analytics</h1>
+
+    <h2>📈 Daily Parcel Volume</h2>
+    <canvas id="dailyLineChart" style="width: 1000px; height: 500px"></canvas>
+
+    <h2>📦 Parcel Status Ratio</h2>
+    <canvas id="statusPieChart"></canvas>
+
+    <script>
+      async function fetchAndRenderCharts() {
+        try {
+          const ENDPOINT_URL = "SECRET";
+
+          const res = await fetch(ENDPOINT_URL);
+          const data = await res.json();
+          console.log(JSON.stringify(data, null, 2));
+
+          // 1. Daily Parcel Line Chart
+          const dailyCtx = document
+            .getElementById("dailyLineChart")
+            .getContext("2d");
+          new Chart(dailyCtx, {
+            type: "line",
+            data: {
+              labels: data.dailyLine.labels,
+              datasets: [
+                {
+                  label: "배송 건수",
+                  data: data.dailyLine.values,
+                  borderColor: "blue",
+                  fill: false,
+                  tension: 0.3,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+          // 2. Status Pie Chart
+          const pieCtx = document
+            .getElementById("statusPieChart")
+            .getContext("2d");
+          new Chart(pieCtx, {
+            type: "pie",
+            data: {
+              labels: Object.keys(data.statusPie),
+              datasets: [
+                {
+                  label: "Status",
+                  data: Object.values(data.statusPie),
+                  backgroundColor: ["#4bc0c0", "#36a2eb", "#ff6384"],
+                },
+              ],
+            },
+          });
+        } catch (err) {
+          console.error("Error fetching chart data", err);
+        }
+      }
+
+      fetchAndRenderCharts();
+    </script>
+  </body>
+</html>
